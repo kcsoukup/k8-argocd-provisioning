@@ -1,0 +1,31 @@
+#
+# THIS WORKS IN ARGOCD!
+#
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: whatpod-application
+  namespace: argocd # The namespace where ArgoCD is installed
+spec:
+  project: whatpod
+  source:
+    repoURL: https://github.com/kcsoukup/argocd-apps.git
+    path: whatpod
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+          - values.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: pantera
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 3
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

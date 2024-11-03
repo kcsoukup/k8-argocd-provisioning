@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.application.name }}
+  namespace: argocd # The namespace where ArgoCD is installed
+spec:
+  project: {{ .Values.appproject.name }}
+  source:
+    repoURL: {{ .Values.application.source.repoURL }}
+    path: {{ .Values.application.source.path }}
+    targetRevision: {{ .Values.application.source.targetRevision }}
+    helm:
+      valueFiles:
+      {{- toYaml .Values.application.source.helm.valueFiles | nindent 10 }}
+
+  destination:
+    server: {{ .Values.application.destination.server }}
+    namespace: {{ .Values.application.destination.namespace }}
+  syncPolicy:
+    {{- if .Values.application.syncPolicy.automated }}
+    automated:
+      {{- if .Values.application.syncPolicy.automated.prune }}
+      prune: {{ .Values.application.syncPolicy.automated.prune }}
+      {{- end }}
+      {{- if .Values.application.syncPolicy.automated.selfHeal }}
+      selfHeal: {{ .Values.application.syncPolicy.automated.selfHeal }}
+      {{- end }}
+    {{- end }}
+    {{- if .Values.application.syncPolicy.retry }}
+    retry:
+      limit: {{ .Values.application.syncPolicy.retry.limit }}
+      backoff:
+        duration: {{ .Values.application.syncPolicy.retry.backoff.duration }}
+        factor: {{ .Values.application.syncPolicy.retry.backoff.factor }}
+        maxDuration: {{ .Values.application.syncPolicy.retry.backoff.maxDuration }}
+    {{- end }}

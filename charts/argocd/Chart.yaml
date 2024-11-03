@@ -1,0 +1,4 @@
+apiVersion: v2
+name: k8-argocd-provisioning
+description: A Helm chart for ArgoCD Application Provisioning
+version: 0.1.0

@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: {{ .Values.appproject.name }}
+  namespace: argocd # The namespace where ArgoCD is installed
+spec:
+  description: {{ .Values.appproject.description }}
+  sourceRepos:
+    {{- range .Values.appproject.repositories }}
+    - {{ . }}
+    {{- end }}
+  destinations:
+    - namespace: {{ .Values.appproject.destinations.namespace }}
+      server: {{ .Values.appproject.destinations.server }}

@@ -1,31 +1,32 @@
 appproject:
-  name: whatpod
-  description: "WhatPod Application"
+  name: # Name for ArgoCD Project
+  description:
   repositories:
-    - https://github.com/kcsoukup/argocd-apps.git
+    # - Repo name, must end with .git... https://github.com/kcsoukup/argocd-apps.git
   destinations:
-    namespace: mushroomhead
-    server: https://kubernetes.default.svc
+    namespace: # Target namespace
+    server: # in-cluster or https://kubernetes.default.svc
 
 application:
-  name: whatpod
+  name: # Application Name
   source:
-    repoURL: https://github.com/kcsoukup/argocd-apps.git
-    path: whatpod
-    targetRevision: HEAD
+    repoURL: # Repo name, must end with .git... https://github.com/kcsoukup/argocd-apps.git
+    path: # Directory name in Repo, use "." for main
+    targetRevision: # HEAD or main or branch name
     helm:
       valueFiles:
-        - values.yaml
+        # Can be more than 1, ex: values.yaml for common, values-diffs.yaml for specifics
+        # - values.yaml
   destination:
-    server: https://kubernetes.default.svc
-    namespace: mushroomhead
+    server: # in-cluster or https://kubernetes.default.svc
+    namespace: # Target namespace
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     retry:
-      limit: 3
+      limit: # 3
       backoff:
-        duration: "5s"
-        factor: 2
-        maxDuration: "3m"
+        duration: # "5s"
+        factor: # 2
+        maxDuration: # "3m"

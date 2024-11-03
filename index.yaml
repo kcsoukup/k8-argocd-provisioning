@@ -1,0 +1,12 @@
+apiVersion: v1
+entries:
+  k8-argocd-provisioning:
+  - apiVersion: v2
+    created: "2024-11-03T07:51:44.475056177-05:00"
+    description: A Helm chart for ArgoCD Application Provisioning
+    digest: 9dd5036b0d7fc39d1708a901e59b6c952acfebf219c8c6c93bd11b023bd2e742
+    name: k8-argocd-provisioning
+    urls:
+    - https://raw.githubusercontent.com/kcsoukup/k8-argocd-provisioning/main/k8-argocd-provisioning-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-11-03T07:51:44.47381255-05:00"
